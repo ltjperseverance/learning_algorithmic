@@ -21,7 +21,7 @@ public class Solution1074 {
             for (int j = k; j < n; j++) {
                 int sum = 0;
                 // 加入{0,1} 以0,0为左上角的区间和等于target，属于边界情况
-                HashMap<Integer,Integer> map = new HashMap<>(){{
+                HashMap<Integer,Integer> map = new HashMap(){{
                     put(0,1);
                 }};
                 for (int i = 0; i < m; i++) {
