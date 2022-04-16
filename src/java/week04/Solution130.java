@@ -29,11 +29,13 @@ import java.util.Stack;
  *      4、处理# 替换回O
  */
 public class Solution130 {
+    int m,n;
     public void solve(char[][] board) {
         //棋盘的行数或者列数小于3的时候所有的元素都是边上的元素
         if (board == null || board.length < 3 || board[0].length < 3) return;
-        int m = board.length;
-        int n = board[0].length;
+        m = board.length;
+        n = board[0].length;
+        if (m ==  0) return;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 // 从边缘第一个是o的开始搜索
@@ -58,24 +60,44 @@ public class Solution130 {
         }
     }
 
-    public void dfs(char[][] board, int i, int j) {
-        // 方向数组
-        int[] dx = {-1, 0, 1, 0};
-        int[] dy = {0, 1, 0, -1};
-        Stack<int[]> stack = new Stack<>();
-        stack.push(new int[]{i,j});// 入栈
-        board[i][j] = '#';  // 将O替换为#
-        while (!stack.isEmpty()) {  // 只要栈不为空  扩充
-            int[] current = stack.pop();  // 出栈
-            for(int k = 0; k<4; k++){
-                int x = current[0] + dx[k]; //往前后左右扩张
-                int y = current[1] + dy[k];
-                // 坐标未出界 且当前位置值为O时  将O替换为#
-                if(x>0 && x<board.length && y>0 && y<board[0].length && board[x][y] == 'O'){  // 符合条件  替换  入栈
-                    board[x][y] = '#';
-                    stack.push(new int[]{x, y});
-                }
-            }
+//    public void dfs(char[][] board, int i, int j) {
+//        // 方向数组
+//        int[] dx = {-1, 0, 1, 0};
+//        int[] dy = {0, 1, 0, -1};
+//        Stack<int[]> stack = new Stack<>();
+//        stack.push(new int[]{i,j});// 入栈
+//        board[i][j] = '#';  // 将O替换为#
+//        while (!stack.isEmpty()) {  // 只要栈不为空  扩充
+//            int[] current = stack.pop();  // 出栈
+//            for(int k = 0; k<4; k++){
+//                int x = current[0] + dx[k]; //往前后左右扩张
+//                int y = current[1] + dy[k];
+//                // 坐标未出界 且当前位置值为O时  将O替换为#
+//                if(x>0 && x<board.length && y>0 && y<board[0].length && board[x][y] == 'O'){  // 符合条件  替换  入栈
+//                    board[x][y] = '#';
+//                    stack.push(new int[]{x, y});
+//                }
+//            }
+//        }
+//    }
+
+    /**
+     * 递归
+     * @param board
+     * @param x
+     * @param y
+     */
+    public void dfs(char[][] board, int x, int y){
+        if(x < 0 || x >= m || y < 0 || y >= n || board[x][y] != 0){
+            return;
         }
+//        对于所有的O标记为#
+        board[x][y] = '#';
+
+        //递归四周
+        dfs(board, x + 1, y);
+        dfs(board, x - 1, y);
+        dfs(board, x, y + 1);
+        dfs(board, x, y - 1);
     }
 }

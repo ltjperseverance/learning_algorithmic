@@ -17,6 +17,7 @@ public class Solution1074 {
                 matrix[i][j] += matrix[i][j-1];
             }
         }
+
         for (int k = 0; k < n; k++) {
             for (int j = k; j < n; j++) {
                 int sum = 0;
